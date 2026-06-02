@@ -1,5 +1,36 @@
 # Progress
 
+## v0.2.0
+
+Status: Implemented
+
+Scope:
+
+- Codeforces data ingestion layer.
+- Reusable sync service.
+- Historical contest storage.
+- Historical submission storage.
+- Historical problem storage.
+- Dashboard history tabs.
+
+Completed:
+
+- Contest ingestion.
+- Submission ingestion.
+- Problem ingestion.
+- Historical data storage.
+- Dashboard data views.
+
+Architecture Decisions:
+
+- Analytics should operate on stored database data, not live Codeforces API calls.
+- Sync workflows are idempotent and reuse the same ingestion path for imports and refreshes.
+- Historical problem data is stored separately from submissions so future analytics can join against normalized records instead of recomputing from live provider payloads.
+
+Next Milestone:
+
+- v0.3.0 analytics foundations.
+
 ## v0.1.0
 
 Status: Implemented
@@ -145,7 +176,7 @@ Backend:
 
 ```text
 NODE_ENV=development
-PORT=4003
+PORT=4000
 MONGODB_URI=mongodb://127.0.0.1:27017/cp-recommendation
 CORS_ORIGIN=http://localhost:5173
 CODEFORCES_API_BASE_URL=https://codeforces.com/api
@@ -155,7 +186,7 @@ REQUEST_TIMEOUT_MS=10000
 Frontend:
 
 ```text
-VITE_API_BASE_URL=http://localhost:4003/api
+VITE_API_BASE_URL=http://localhost:4000/api
 ```
 
 ## Commands

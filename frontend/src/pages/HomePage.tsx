@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getApiErrorMessage, importCodeforcesUser } from "../api/users";
+import { getApiErrorMessage, syncCodeforcesUser } from "../api/users";
 import { validateCodeforcesHandle } from "../utils/handleValidation";
 
 const STORAGE_KEY = "cp-recommendation:last-imported-user";
@@ -27,9 +27,9 @@ const HomePage = () => {
     setSuccess(null);
 
     try {
-      const response = await importCodeforcesUser(handle.trim());
+      const response = await syncCodeforcesUser(handle.trim());
       localStorage.setItem(STORAGE_KEY, JSON.stringify(response.data));
-      setSuccess(response.message ?? "Import complete.");
+      setSuccess(response.message ?? "Sync complete.");
 
       window.setTimeout(() => {
         navigate("/dashboard", {
@@ -52,15 +52,15 @@ const HomePage = () => {
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-pine">
-              v0.1.0 Codeforces import
+              v0.2.0 Data ingestion layer
             </p>
             <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-normal text-ink sm:text-5xl">
               Competitive Programming Analytics & Recommendation Platform
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-ink/70">
-              Import a Codeforces profile and open the first coaching dashboard
-              view. This release focuses on the foundation: validated import,
-              persistent profile storage, and a clean profile summary.
+              Import a Codeforces profile, ingest its historical contest and
+              submission data, and open the dashboard views backed entirely by
+              stored database records.
             </p>
           </div>
 
@@ -88,7 +88,7 @@ const HomePage = () => {
                 disabled={isLoading}
                 className="min-h-12 rounded-lg bg-pine px-5 font-semibold text-white transition hover:bg-pine/90 disabled:cursor-not-allowed disabled:bg-ink/30"
               >
-                {isLoading ? "Importing..." : "Import"}
+                {isLoading ? "Syncing..." : "Sync"}
               </button>
             </div>
 

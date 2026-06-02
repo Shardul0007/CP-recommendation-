@@ -18,6 +18,7 @@ export interface ApiEnvelope<T> {
   data: T;
   meta?: {
     created?: boolean;
+    [key: string]: unknown;
   };
 }
 
@@ -29,4 +30,34 @@ export interface ApiErrorEnvelope {
     statusCode: number;
     details?: unknown;
   };
+}
+
+export interface ContestHistoryItem {
+  contestId: number;
+  contestName: string;
+  rank: number;
+  oldRating: number;
+  newRating: number;
+  ratingChange: number;
+  contestTime: string;
+}
+
+export interface SubmissionHistoryItem {
+  submissionId: number;
+  problemId: string;
+  problemName: string;
+  contestId: number;
+  verdict?: string;
+  programmingLanguage?: string;
+  problemRating?: number;
+  tags: string[];
+  submissionTime: string;
+}
+
+export interface ProblemHistoryItem {
+  problemId: string;
+  contestId: number;
+  name: string;
+  rating?: number;
+  tags: string[];
 }

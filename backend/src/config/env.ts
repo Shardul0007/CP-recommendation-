@@ -13,7 +13,7 @@ const nodeEnv = (process.env.NODE_ENV ?? "development") as NodeEnv;
 
 export const env = Object.freeze({
   nodeEnv,
-  port: parseNumber(process.env.PORT, 4003),
+  port: parseNumber(process.env.PORT, 4000),
   mongodbUri:
     process.env.MONGODB_URI ??
     (nodeEnv === "test"

@@ -22,3 +22,24 @@ export const validateBody =
     request.body = result.data;
     next();
   };
+
+export const validateParams =
+  (schema: ZodSchema) =>
+  (request: Request, _response: Response, next: NextFunction): void => {
+    const result = schema.safeParse(request.params);
+
+    if (!result.success) {
+      next(
+        new AppError(
+          400,
+          "Validation failed.",
+          "VALIDATION_ERROR",
+          result.error.flatten()
+        )
+      );
+      return;
+    }
+
+    request.params = result.data as Request["params"];
+    next();
+  };
